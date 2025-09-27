@@ -75,15 +75,30 @@ public:
     }
 
     template <typename T>
-    static std::vector<T>& heapSort(std::vector<T>& nums);
+    static std::vector<T>& heapSort(std::vector<T>& nums) {
+        // Convert vector nums into a heap
+        for (size_t i = (nums.size() - 1) / 2; i > 0; --i) {
+            heapify(nums, i, nums.size());
+        }
+        heapify(nums,0, nums.size());
+
+        
+        // Move the max to the end of the heap and
+        // recall heapify with one shorter length
+        for (size_t i = 0; i < nums.size() - 1; ++i) {
+            T max = nums[0];
+            nums[0] = nums[nums.size() - i - 1];
+            nums[nums.size() - i - 1] = max;
+            heapify(nums, 0, nums.size() - i - 1);
+        }
+
+        return nums;
+    }
 
     template <typename T>
     static std::vector<T>& radixSort(std::vector<T>& nums);
 
-private:
-    template <typename T>
-    static std::vector<T>& countingSort(std::vector<T>& nums);
-    
+private: 
     template <typename T>
     static std::vector<T>& quickSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
         // Base case of length <= 1
@@ -125,18 +140,22 @@ private:
 
     template <typename T>
     static std::vector<T>& mergeSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
+        // Base case of length <= 1
         if (end - begin <= 1)
             return nums;
         
+        // Call mergeSort on left and right half of the array
         size_t mid = begin + (end - begin) / 2;
         mergeSortHelper(nums, begin, mid);
         mergeSortHelper(nums, mid, end);
 
+        // Copy left and right halves for merging
         std::vector<T> left(nums.begin() + begin, nums.begin() + mid);
         std::vector<T> right(nums.begin() + mid, nums.begin() + end);
         size_t li = 0;
         size_t ri = 0;
 
+        // Merge left and right copies back to the original vector
         while (li < left.size() && ri < right.size()) {
             if (left[li] <= right[ri]) {
                 nums[begin + li + ri] = left[li];
@@ -147,11 +166,11 @@ private:
             }
         }
 
+        // Copy remaining elements
         while (li < left.size()) {
             nums[begin + li + ri] = left[li];
             ++li;
         }
-
         while (ri < right.size()) {
             nums[begin + li + ri] = right[ri];
             ++ri;
@@ -159,6 +178,33 @@ private:
 
         return nums;
     }
+
+    template <typename T>
+    static std::vector<T>& heapify(std::vector<T>& nums, size_t index, size_t length) {
+        T key = nums[index];
+
+        size_t i = index;
+        while (i < length) {
+            size_t li = i * 2 + 1;
+            size_t ri = i * 2 + 2;
+            if (ri < length && nums[ri] > key && nums[ri] > nums[li]) {
+                nums[i] = nums[ri];
+                i = ri;
+            } else if (li < length && nums[li] > key) {
+                nums[i] = nums[li];
+                i = li;
+            } else {
+                nums[i] = key;
+                break;
+            }
+        }
+
+        return nums;
+    }
+
+    template <typename T>
+    static std::vector<T>& countingSort(std::vector<T>& nums);
+
 };
 
 #endif
