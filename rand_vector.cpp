@@ -16,14 +16,14 @@ std::vector<int>* RandVector::random(size_t n, int max) {
     return nums;
 }
 
-std::vector<int>* RandVector::nonDecreasing(size_t n, int max) {
+std::vector<int>* RandVector::nondecreasing(size_t n, int max) {
     std::vector<int>* nums = RandVector::random(n, max);
     std::sort(nums->begin(), nums->end());
     return nums;
 
 }
 
-std::vector<int>* RandVector::nonIncreasing(size_t n, int max) {
+std::vector<int>* RandVector::nonincreasing(size_t n, int max) {
     std::vector<int>* nums = RandVector::random(n, max);
     std::sort(nums->begin(), nums->end(), std::greater<>());
     return nums;

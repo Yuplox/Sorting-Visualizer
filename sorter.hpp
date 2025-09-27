@@ -7,6 +7,18 @@
 
 class Sorter {
 public:
+    /**
+     * Sorts a vector using selection sort
+     *
+     * Best Case Time Complexity:    Θ(n^2)
+     * Average Case Time Complexity: Θ(n^2)
+     * Worst Case Time Complexity:   Θ(n^2)
+     * Auxiliary Space: Θ(1)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& selectionSort(std::vector<T>& nums) {
         size_t length = nums.size();
@@ -23,6 +35,18 @@ public:
         return nums;
     }
 
+    /**
+     * Sorts a vector using bubble sort
+     *
+     * Best Case Time Complexity:    Θ(n^2)
+     * Average Case Time Complexity: Θ(n^2)
+     * Worst Case Time Complexity:   Θ(n^2)
+     * Auxiliary Space: Θ(1)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& bubbleSort(std::vector<T>& nums) {
         size_t length = nums.size();
@@ -38,6 +62,18 @@ public:
         return nums;
     }
 
+    /**
+     * Sorts a vector using insertion sort
+     *
+     * Best Case Time Complexity:    Θ(n)
+     * Average Case Time Complexity: Θ(n^2)
+     * Worst Case Time Complexity:   Θ(n^2)
+     * Auxiliary Space: Θ(1)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& insertionSort(std::vector<T>& nums) {
         size_t length = nums.size();
@@ -63,16 +99,52 @@ public:
         return nums;
     }
 
+    /**
+     * Sorts a vector using quick sort
+     *
+     * Best Case Time Complexity:    Θ(nlogn)
+     * Average Case Time Complexity: Θ(nlogn)
+     * Worst Case Time Complexity:   Θ(n^2)
+     * Auxiliary Space: Θ(1)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& quickSort(std::vector<T>& nums) {
         return quickSortHelper(nums, 0, nums.size());
     }
 
+    /**
+     * Sorts a vector using merge sort
+     *
+     * Best Case Time Complexity:    Θ(nlogn)
+     * Average Case Time Complexity: Θ(nlogn)
+     * Worst Case Time Complexity:   Θ(nlogn)
+     * Auxiliary Space: Θ(n)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& mergeSort(std::vector<T>& nums) {
         return mergeSortHelper(nums, 0, nums.size());
     }
 
+    /**
+     * Sorts a vector using heap sort
+     *
+     * Best Case Time Complexity:    Θ(nlogn)
+     * Average Case Time Complexity: Θ(nlogn)
+     * Worst Case Time Complexity:   Θ(nlogn)
+     * Auxiliary Space: Θ(1)
+     * 
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @returns Reference to the vector in nondecreasing order
+     */
     template <typename T>
     static std::vector<T>& heapSort(std::vector<T>& nums) {
         // Convert vector nums into a heap
@@ -94,6 +166,17 @@ public:
         return nums;
     }
 
+    /**
+     * Sorts a vector of integers using radix sort
+     *
+     * Best Case Time Complexity:    Θ(nk)
+     * Average Case Time Complexity: Θ(nk)
+     * Worst Case Time Complexity:   Θ(nk)
+     * Auxiliary Space: Θ(n + k)
+     * 
+     * @param nums Vector of integers
+     * @returns Reference to the vector in nondecreasing order
+     */
     static std::vector<int>& radixSort(std::vector<int>& nums){
         // Find max integer in vector nums
         int max = nums[0];
@@ -104,12 +187,23 @@ public:
         }
 
         for (int div = 1; max / div > 0; div *= 10) {
-            countingSort(nums, div);
+            countSort(nums, div);
         }
         return nums;
     }
 
-private: 
+private:
+    /**
+     * Helper function for quick sort
+     *
+     * Sorts a slice of a vector from begin (inclusive) to end (exclusive)
+     *
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @param begin First index to be sorted
+     * @param end Last index to be sorted + 1
+     * @returns Reference to the vector with begin to end sorted
+     */
     template <typename T>
     static std::vector<T>& quickSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
         // Base case of length <= 1
@@ -151,6 +245,17 @@ private:
         return nums;
     }
 
+    /**
+     * Helper function for merge sort
+     *
+     * Sorts a slice of a vector from begin (inclusive) to end (exclusive)
+     *
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @param begin First index to be sorted
+     * @param end Last index to be sorted + 1
+     * @returns Reference to the vector with begin to end sorted
+     */
     template <typename T>
     static std::vector<T>& mergeSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
         // Base case of length <= 1
@@ -192,18 +297,29 @@ private:
         return nums;
     }
 
+    /**
+     * Helper function for heap sort
+     *
+     * Heapifies a slice of a vector from the root index
+     *
+     * @tparam T The type of data held in the vector
+     * @param nums Vector of datatype T
+     * @param index Index of the element at the root of the sub heap
+     * @param end Last index of the sub heap + 1
+     * @returns Reference to the vector heapified from the root index
+     */
     template <typename T>
-    static std::vector<T>& heapify(std::vector<T>& nums, size_t index, size_t length) {
+    static std::vector<T>& heapify(std::vector<T>& nums, size_t index, size_t end) {
         T key = nums[index];
 
         size_t i = index;
-        while (i < length) {
+        while (i < end) {
             size_t li = i * 2 + 1;
             size_t ri = i * 2 + 2;
-            if (ri < length && nums[ri] > key && nums[ri] > nums[li]) {
+            if (ri < end && nums[ri] > key && nums[ri] > nums[li]) {
                 nums[i] = nums[ri];
                 i = ri;
-            } else if (li < length && nums[li] > key) {
+            } else if (li < end && nums[li] > key) {
                 nums[i] = nums[li];
                 i = li;
             } else {
@@ -215,7 +331,16 @@ private:
         return nums;
     }
 
-    static std::vector<int>& countingSort(std::vector<int>& nums, int div) {
+    /**
+     * Helper function for radix sort
+     *
+     * Sorts integers in the vector based on digits in place div
+     * 
+     * @param nums Vector of integers
+     * @param div Place of the digit being sorted (e.g. 1s, 10s, or 100s place)
+     * @returns Reference to the vector sorted based on digits in place div
+     */
+    static std::vector<int>& countSort(std::vector<int>& nums, int div) {
         // Creates vector for output and digit frequency
         std::vector<int> count(10, 0);
         std::vector<int> output = nums;
