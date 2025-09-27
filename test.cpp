@@ -1,28 +1,22 @@
 #include <iostream>
 #include "sorter.hpp"
+#include "rand_vector.hpp"
 
 int main() {
-    std::vector nums1 = {55, 88, 23, 10, 90, 33, 79, 1, 30, 55, 100};
-    std::vector nums2 = {55.1, 88.0, 23.0, 10.0, 90.0, 33.0, 79.0, 1.0, 30.0, 55.0, 100.0};
-    std::vector nums3 = {55, 88, 23, 10, 90, 33, 79, 1, 30, 55, 100};
+    std::vector<int>* nums1 = RandVector::random(100, 100);
+    std::vector<int>* nums2 = RandVector::nonIncreasing(100, 100);
+    std::vector<int>* nums3 = RandVector::equal(100, 100);
 
-    Sorter::heapSort(nums1);
-    Sorter::quickSort(nums2);
-    Sorter::mergeSort(nums3);
+    Sorter::quickSort(*nums1);
 
-
-    for (auto n : nums1) {
+    for (auto n : *nums1) {
         std::cout << n << " "; 
     }
     std::cout << std::endl;
 
-    for (auto n : nums2) {
+    for (auto n : *nums2) {
         std::cout << n << " "; 
     }
     std::cout << std::endl;
 
-    for (auto n : nums3) {
-        std::cout << n << " "; 
-    }
-    std::cout << std::endl;
 }

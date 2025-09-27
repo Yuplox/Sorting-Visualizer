@@ -2,8 +2,7 @@
 #define SORTER_HPP
 
 #include <cstddef>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 #include <vector>
 
 class Sorter {
@@ -107,8 +106,10 @@ private:
 
         
         // Randomly select pivot and sawp with last element
-        srand(time(NULL));
-        size_t pi =  (rand() % (end - begin - 1)) + begin;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(begin, end - 1);
+        size_t pi =  dist(gen);
         T temp = nums[pi];
         nums[pi] = nums[end - 1];
         nums[end - 1] = temp;
@@ -202,9 +203,7 @@ private:
         return nums;
     }
 
-    template <typename T>
-    static std::vector<T>& countingSort(std::vector<T>& nums);
-
+    static std::vector<int>& countingSort(std::vector<int>& nums);
 };
 
 #endif
