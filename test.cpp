@@ -4,19 +4,20 @@
 
 int main() {
     std::vector<int>* nums1 = RandVector::random(100, 100);
-    std::vector<int>* nums2 = RandVector::nonIncreasing(100, 100);
-    std::vector<int>* nums3 = RandVector::equal(100, 100);
+    std::vector<int> nums2(*nums1);
 
-    Sorter::quickSort(*nums1);
+    Sorter::radixSort(*nums1);
+    Sorter::mergeSort(nums2);
 
-    for (auto n : *nums1) {
-        std::cout << n << " "; 
+    for (int n : *nums1) {
+        std::cout << n << " ";
     }
     std::cout << std::endl;
 
-    for (auto n : *nums2) {
-        std::cout << n << " "; 
+    for (int n : nums2) {
+        std::cout << n << " ";
     }
     std::cout << std::endl;
 
+    delete nums1;
 }

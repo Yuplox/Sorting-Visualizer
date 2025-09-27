@@ -94,8 +94,20 @@ public:
         return nums;
     }
 
-    template <typename T>
-    static std::vector<T>& radixSort(std::vector<T>& nums);
+    static std::vector<int>& radixSort(std::vector<int>& nums){
+        // Find max integer in vector nums
+        int max = nums[0];
+        for (size_t i = 1; i < nums.size(); ++i) {
+            if (nums[i] > max) {
+                max = nums[i];
+            }
+        }
+
+        for (int div = 1; max / div > 0; div *= 10) {
+            countingSort(nums, div);
+        }
+        return nums;
+    }
 
 private: 
     template <typename T>
@@ -203,7 +215,33 @@ private:
         return nums;
     }
 
-    static std::vector<int>& countingSort(std::vector<int>& nums);
+    static std::vector<int>& countingSort(std::vector<int>& nums, int div) {
+        // Creates vector for output and digit frequency
+        std::vector<int> count(10, 0);
+        std::vector<int> output = nums;
+
+        // Counts frequency of each digit
+        for (size_t i = 0; i < nums.size(); ++i) {
+            int digit = (nums[i] / div) % 10;
+            ++count[digit];
+        }
+
+        // Converts frequencies to index values for ouput
+        // [1, 5, 0, 1, 6, 7] -> [1, 6, 6, 7, 13, 20]
+        for (int i = 1; i < 10; ++i) {
+            count[i] += count[i - 1];
+        }
+
+        // Fills output based on indices in count
+        for (size_t i = nums.size() - 1; i > 0; --i) {
+            int digit = (nums[i] / div) % 10;
+            output[--count[digit]] = nums[i];
+        }
+        output[--count[(nums[0] / div) % 10]] = nums[0];
+
+        nums = output;
+        return nums;
+    }
 };
 
 #endif
