@@ -7,7 +7,7 @@ int main() {
     std::vector nums3 = {55, 88, 23, 10, 90, 33, 79, 1, 30, 55, 100};
 
     Sorter::selectionSort(nums1);
-    Sorter::bubbleSort(nums2);
+    Sorter::quickSort(nums2);
     Sorter::mergeSort(nums3);
 
 

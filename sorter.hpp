@@ -1,6 +1,9 @@
 #ifndef SORTER_HPP
 #define SORTER_HPP
 
+#include <cstddef>
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 
 class Sorter {
@@ -62,7 +65,9 @@ public:
     }
 
     template <typename T>
-    static std::vector<T>& quickSort(std::vector<T>& nums);
+    static std::vector<T>& quickSort(std::vector<T>& nums) {
+        return quickSortHelper(nums, 0, nums.size());
+    }
 
     template <typename T>
     static std::vector<T>& mergeSort(std::vector<T>& nums) {
@@ -80,7 +85,43 @@ private:
     static std::vector<T>& countingSort(std::vector<T>& nums);
     
     template <typename T>
-    static std::vector<T>& quickSortHelper(std::vector<T>& nums);
+    static std::vector<T>& quickSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
+        // Base case of length <= 1
+        if (end - begin <= 1)
+            return nums;
+
+        
+        // Randomly select pivot and sawp with last element
+        srand(time(NULL));
+        size_t pi =  (rand() % (end - begin - 1)) + begin;
+        T temp = nums[pi];
+        nums[pi] = nums[end - 1];
+        nums[end - 1] = temp;
+
+        // Elements <= pivot are moved 
+        // to the left half of the array
+        size_t i = begin;
+        for (size_t j = begin; j < end - 1; ++j) {
+            if (nums[j] <= nums[end - 1]) {
+                T temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                ++i;
+            }
+        }
+
+        // Swap pivot with the first element 
+        // in the right half of the array
+        temp = nums[i];
+        nums[i] = nums[end - 1];
+        nums[end - 1] = temp;
+
+        // Call quick sort on both halves of 
+        // the array excluding the pivot
+        quickSortHelper(nums, begin, i);
+        quickSortHelper(nums, i + 1, end);
+        return nums;
+    }
 
     template <typename T>
     static std::vector<T>& mergeSortHelper(std::vector<T>& nums, size_t begin, size_t end) {
