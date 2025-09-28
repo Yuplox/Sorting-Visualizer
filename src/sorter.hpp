@@ -23,14 +23,12 @@ public:
     static std::vector<T>& selectionSort(std::vector<T>& nums) {
         size_t length = nums.size();
         for (size_t i = 0; i < length; ++i) {
-            size_t minInd = i;
+            size_t minI = i;
             for (size_t j = i; j < length; ++j) {
-                if (nums[j] < nums[minInd])
-                    minInd = j;
+                if (nums[j] < nums[minI])
+                    minI = j;
             }
-            T temp = nums[i];
-            nums[i] = nums[minInd];
-            nums[minInd] = temp;
+            std::swap(nums[i], nums[minI]);
         }
         return nums;
     }
@@ -49,13 +47,14 @@ public:
      */
     template <typename T>
     static std::vector<T>& bubbleSort(std::vector<T>& nums) {
+        if (nums.empty())
+            return nums;
+
         size_t length = nums.size();
         for (size_t i = length - 1; i > 0; --i) {
             for (size_t j = 1; j <= i; ++j) {
                 if (nums[j - 1] > nums[j]) {
-                    T temp = nums[j - 1];
-                    nums[j - 1] = nums[j];
-                    nums[j] = temp;
+                    std::swap(nums[j - 1], nums[j]);
                 }
             }
         }
@@ -66,7 +65,7 @@ public:
      * Sorts a vector using insertion sort
      *
      * Best Case Time Complexity:    Θ(n)
-     * Average Case Time Complexity: Θ(n^2)
+     * Average Case Time ComAplexity: Θ(n^2)
      * Worst Case Time Complexity:   Θ(n^2)
      * Auxiliary Space: Θ(1)
      * 
@@ -147,6 +146,9 @@ public:
      */
     template <typename T>
     static std::vector<T>& heapSort(std::vector<T>& nums) {
+        if (nums.empty())
+            return nums;
+
         // Convert vector nums into a heap
         for (size_t i = (nums.size() - 1) / 2; i > 0; --i) {
             heapify(nums, i, nums.size());
@@ -157,9 +159,7 @@ public:
         // Move the max to the end of the heap and
         // recall heapify with one shorter length
         for (size_t i = 0; i < nums.size() - 1; ++i) {
-            T max = nums[0];
-            nums[0] = nums[nums.size() - i - 1];
-            nums[nums.size() - i - 1] = max;
+            std::swap(nums[0], nums[nums.size() - i - 1]);
             heapify(nums, 0, nums.size() - i - 1);
         }
 
@@ -178,6 +178,9 @@ public:
      * @returns Reference to the vector in nondecreasing order
      */
     static std::vector<int>& radixSort(std::vector<int>& nums){
+        if (nums.empty())
+            return nums;
+
         // Find max integer in vector nums
         int max = nums[0];
         for (size_t i = 1; i < nums.size(); ++i) {
@@ -210,33 +213,26 @@ private:
         if (end - begin <= 1)
             return nums;
 
-        
         // Randomly select pivot and sawp with last element
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dist(begin, end - 1);
         size_t pi =  dist(gen);
-        T temp = nums[pi];
-        nums[pi] = nums[end - 1];
-        nums[end - 1] = temp;
+        std::swap(nums[pi], nums[end - 1]);
 
         // Elements <= pivot are moved 
         // to the left half of the array
         size_t i = begin;
         for (size_t j = begin; j < end - 1; ++j) {
             if (nums[j] <= nums[end - 1]) {
-                T temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
+                std::swap(nums[i], nums[j]);
                 ++i;
             }
         }
 
         // Swap pivot with the first element 
         // in the right half of the array
-        temp = nums[i];
-        nums[i] = nums[end - 1];
-        nums[end - 1] = temp;
+        std::swap(nums[i], nums[end - 1]);
 
         // Call quick sort on both halves of 
         // the array excluding the pivot

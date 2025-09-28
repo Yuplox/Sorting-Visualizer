@@ -2,6 +2,11 @@
 # https://spin.atomicobject.com/2016/08/26/makefile-c-projects/
 # and https://makefiletutorial.com/
 
+# Links cppunit binaries
+LDFLAGS = -lcppunit
+
+CXXFLAGS = -g -Wall
+
 # Final executable after running make
 TARGET_EXEC := test.out
 
