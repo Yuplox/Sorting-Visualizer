@@ -216,7 +216,7 @@ private:
         // Randomly select pivot and sawp with last element
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dist(begin, end - 1);
+        std::uniform_int_distribution<unsigned long> dist(begin, end - 1);
         size_t pi =  dist(gen);
         std::swap(nums[pi], nums[end - 1]);
 
